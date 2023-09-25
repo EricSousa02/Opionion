@@ -27,13 +27,14 @@ const LeftSidebar = () => {
             <Link
               href={link.route}
               key={link.label}
-              className={`leftsidebar_link ${isActive && "bg-primary-500 "}`}
+              className={`leftsidebar_link ${isActive && "bg-pri"}`}
             >
               <Image
                 src={link.imgURL}
                 alt={link.label}
                 width={24}
                 height={24}
+          
               />
 
               <p className='text-light-1 max-lg:hidden'>{link.label}</p>
