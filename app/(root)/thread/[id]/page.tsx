@@ -9,6 +9,7 @@ import { fetchThreadById } from "@/lib/actions/thread.actions";
 
 export const revalidate = 0;
 
+
 async function page({ params }: { params: { id: string } }) {
   if (!params.id) return null;
 
@@ -19,6 +20,9 @@ async function page({ params }: { params: { id: string } }) {
   if (!userInfo?.onboarded) redirect("/onboarding");
 
   const thread = await fetchThreadById(params.id);
+
+  // Verifica se userInfo._id está no array de likes da thread principal
+  const isLikedThread = thread.likes.includes(userInfo._id);
 
   return (
     <section className='relative'>
@@ -32,6 +36,8 @@ async function page({ params }: { params: { id: string } }) {
           community={thread.community}
           createdAt={thread.createdAt}
           comments={thread.children}
+          userInfo={userInfo} // Passando o objeto userInfo diretamente
+          isLiked={isLikedThread}
         />
       </div>
 
@@ -55,6 +61,8 @@ async function page({ params }: { params: { id: string } }) {
             community={childItem.community}
             createdAt={childItem.createdAt}
             comments={childItem.children}
+            userInfo={userInfo} // Passando o objeto userInfo diretamente
+            isLiked={childItem.likes.includes(userInfo._id)}
             isComment
           />
         ))}
@@ -64,3 +72,4 @@ async function page({ params }: { params: { id: string } }) {
 }
 
 export default page;
+

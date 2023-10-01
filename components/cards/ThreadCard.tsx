@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { formatDateString } from "@/lib/utils";
 import DeleteThread from "../forms/DeleteThread";
+import HeartIcon from "../forms/HeartIcon"
 
 interface Props {
   id: string;
@@ -25,6 +26,10 @@ interface Props {
       image: string;
     };
   }[];
+  userInfo: {
+    _id: string;
+  };
+  isLiked: boolean;
   isComment?: boolean;
 }
 
@@ -37,6 +42,8 @@ function ThreadCard({
   community,
   createdAt,
   comments,
+  userInfo,
+  isLiked,
   isComment,
 }: Props) {
   return (
@@ -63,7 +70,7 @@ function ThreadCard({
           <div className='flex w-full flex-col'>
             <Link href={`/profile/${author.id}`} className='w-fit'>
               <h4 className='cursor-pointer text-base-semibold text-light-1'>
-                {author.name}
+                {author.name}              
               </h4>
             </Link>
 
@@ -71,13 +78,7 @@ function ThreadCard({
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className='flex gap-3.5'>
-                <Image
-                  src='/assets/heart-gray.svg'
-                  alt='heart'
-                  width={24}
-                  height={24}
-                  className='cursor-pointer object-contain'
-                />
+              <HeartIcon threadId={String(id)} userId={String(userInfo._id)} isLiked={isLiked}/>
                 <Link href={`/thread/${id}`}>
                   <Image
                     src='/assets/reply.svg'
@@ -85,22 +86,10 @@ function ThreadCard({
                     width={24}
                     height={24}
                     className='cursor-pointer object-contain'
+
                   />
                 </Link>
-                <Image
-                  src='/assets/repost.svg'
-                  alt='heart'
-                  width={24}
-                  height={24}
-                  className='cursor-pointer object-contain'
-                />
-                <Image
-                  src='/assets/share.svg'
-                  alt='heart'
-                  width={24}
-                  height={24}
-                  className='cursor-pointer object-contain'
-                />
+
               </div>
 
               {isComment && comments.length > 0 && (

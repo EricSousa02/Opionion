@@ -13,6 +13,7 @@ interface Result {
     _id: string;
     text: string;
     parentId: string | null;
+    likes: string[];
     author: {
       name: string;
       image: string;
@@ -36,9 +37,13 @@ interface Props {
   currentUserId: string;
   accountId: string;
   accountType: string;
+  userInfo: {
+    _id: string;
+  };
+  isLiked: boolean;
 }
 
-async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
+async function ThreadsTab({ currentUserId, accountId, accountType, userInfo, }: Props) {
   let result: Result;
 
   if (accountType === "Community") {
@@ -52,7 +57,7 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
   }
 
   return (
-    <section className='mt-9 flex flex-col gap-10'>
+    <section className="mt-9 flex flex-col gap-10">
       {result.threads.map((thread) => (
         <ThreadCard
           key={thread._id}
@@ -76,6 +81,8 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
           }
           createdAt={thread.createdAt}
           comments={thread.children}
+          userInfo={userInfo}
+          isLiked={thread.likes.includes(userInfo._id)} // Adicione a lógica para isLiked
         />
       ))}
     </section>
