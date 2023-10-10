@@ -50,6 +50,7 @@ async function Home({
                   comments={post.children}
                   userInfo={userInfo._id}
                   isLiked={isLiked}
+                  likes={post.likes}
                 />
               );
             })}

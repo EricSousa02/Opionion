@@ -38,6 +38,7 @@ async function page({ params }: { params: { id: string } }) {
           comments={thread.children}
           userInfo={userInfo} // Passando o objeto userInfo diretamente
           isLiked={isLikedThread}
+          likes={thread.likes}
         />
       </div>
 
@@ -63,6 +64,7 @@ async function page({ params }: { params: { id: string } }) {
             comments={childItem.children}
             userInfo={userInfo} // Passando o objeto userInfo diretamente
             isLiked={childItem.likes.includes(userInfo._id)}
+            likes={childItem.likes}
             isComment
           />
         ))}

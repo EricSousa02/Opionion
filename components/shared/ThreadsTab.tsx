@@ -41,6 +41,7 @@ interface Props {
     _id: string;
   };
   isLiked: boolean;
+  likes: string[];
 }
 
 async function ThreadsTab({ currentUserId, accountId, accountType, userInfo, }: Props) {
@@ -82,7 +83,8 @@ async function ThreadsTab({ currentUserId, accountId, accountType, userInfo, }: 
           createdAt={thread.createdAt}
           comments={thread.children}
           userInfo={userInfo}
-          isLiked={thread.likes.includes(userInfo._id)} // Adicione a lógica para isLiked
+          isLiked={thread.likes.includes(userInfo._id)}
+          likes={thread.likes}
         />
       ))}
     </section>

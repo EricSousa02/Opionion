@@ -4,6 +4,7 @@ import Link from "next/link";
 import { formatDateString } from "@/lib/utils";
 import DeleteThread from "../forms/DeleteThread";
 import HeartIcon from "../forms/HeartIcon"
+import LikesCount from "../forms/LikesCount"
 
 interface Props {
   id: string;
@@ -26,6 +27,7 @@ interface Props {
       image: string;
     };
   }[];
+  likes: string[];
   userInfo: {
     _id: string;
   };
@@ -45,7 +47,10 @@ function ThreadCard({
   userInfo,
   isLiked,
   isComment,
+  likes,
 }: Props) {
+
+
   return (
     <article
       className={`flex w-full flex-col rounded-xl ${
@@ -78,7 +83,9 @@ function ThreadCard({
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className='flex gap-3.5'>
+
               <HeartIcon threadId={String(id)} userId={String(userInfo._id)} isLiked={isLiked}/>
+
                 <Link href={`/thread/${id}`}>
                   <Image
                     src='/assets/reply.svg'
@@ -95,10 +102,11 @@ function ThreadCard({
               {isComment && comments.length > 0 && (
                 <Link href={`/thread/${id}`}>
                   <p className='mt-1 text-subtle-medium text-gray-1'>
-                    {comments.length} repl{comments.length > 1 ? "ies" : "y"}
+                  {comments.length} repl{comments.length > 1 ? "ies" : "y"} <LikesCount likes={likes}/>
                   </p>
                 </Link>
               )}
+              
             </div>
           </div>
         </div>
@@ -127,7 +135,7 @@ function ThreadCard({
 
           <Link href={`/thread/${id}`}>
             <p className='mt-1 text-subtle-medium text-gray-1'>
-              {comments.length} repl{comments.length > 1 ? "ies" : "y"}
+            {comments.length} repl{comments.length > 1 ? "ies" : "y"} <LikesCount likes={likes}/>
             </p>
           </Link>
         </div>
